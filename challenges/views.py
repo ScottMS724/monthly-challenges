@@ -19,11 +19,25 @@ monthly_challenges = {
     "december": "The current month is December."
 }
 
+def index(request):
+    list_items = ""
+    months = list(monthly_challenges.keys())
+
+    for month in months: 
+        capitalized_month = month.capitalize()
+        month_path = reverse("month-challenge", args=[month])
+        list_items += f"<li><a href=\"{month_path}\">{capitalized_month}</a></li>"
+
+    response_data = f"<ul>{list_items}</ul>"
+    return HttpResponse(response_data)
+
+
+
 def monthly_challenge_by_number(request, month_integer):
     months = list(monthly_challenges.keys())
 
     if month_integer > len(months):
-        return HttpResponseNotFound("Please enter a valid month.")
+        return HttpResponseNotFound("<h1>Please enter a valid month.</h1>")
 
     redirect_month = months[month_integer - 1]
     redirect_path = reverse("month-challenge", args=[redirect_month]) # /challenges/month 
@@ -34,6 +48,7 @@ def monthly_challenge_by_number(request, month_integer):
 def monthly_challenge(request, month):
     try:
         challenge_text = monthly_challenges[month]
+        response_data = f"<h1>{challenge_text}</h1>"
+        return HttpResponse(response_data)
     except: 
-        return HttpResponseNotFound("Please enter a valid month.")
-    return HttpResponse(challenge_text)
+        return HttpResponseNotFound("<h1>Please enter a valid month.</h1>")
