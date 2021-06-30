@@ -1,13 +1,16 @@
- <!-- HTML template for lists of items-->
+{% extends "base.html" %}
+{% load static %}
 
- {% extends "base.html" %}
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "challenges/challenges.css" %}">
+{% endblock %}
 
-    {% block page_title %}
-        All Challenges
-    {% endblock %}
+{% block page_title %}
+    All Challenges
+{% endblock %}
 
 
-    {% block content %}
+{% block content %}
     {% include "challenges/includes/header.html" %}
     
         <ul>
@@ -15,4 +18,4 @@
                 <li><a href="{% url "month-challenge" month %}">{{ month|title }}</a></li>
             {% endfor %}
         </ul>
-    {% endblock %}
+{% endblock %}
